@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(Test LANGUAGES CXX VERSION 1.2.3)
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PROJECT_VERSION 0.0.${PATCH_VERSION})
+project(problem VERSION ${PROJECT_VERSION})
+configure_file(version.h.in version.h)
 
 find_package(Threads REQUIRED)
 find_package(Boost REQUIRED COMPONENTS filesystem program_options REQUIRED)
