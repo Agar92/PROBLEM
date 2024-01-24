@@ -7,16 +7,19 @@ using boost::asio::ip::tcp;
 
 class TCPClient {
 public:
-    TCPClient(boost::asio::io_context& io_service,
-              const std::string& server)
-      : socket_(io_service),
-        resolver(io_service), query(server, "1895"),
-        endpoint_iterator( resolver.resolve(query) ) {
-    }
+    TCPClient(const std::string& server)
+      : socket_(m_io),
+        resolver(m_io), query(server, "1895"),
+        endpoint_iterator(resolver.resolve(query)) {}
+
+  ~TCPClient(){
+    boost::system::error_code ec;
+    socket_.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+}
 
   void SetMessage(const std::string & msg){message=msg;}
 
-  void run(const std::string & msg, std::promise<bool> && promise){
+  void run(const std::string & msg){
     message=msg;
     message+="\n";
     boost::asio::async_connect(socket_, endpoint_iterator,
@@ -42,10 +45,12 @@ public:
                 }
                 else std::cout<<"ERROR async_connect"<<std::endl;
             });
-    promise.set_value(true);
+    m_io.run();
   }
 
 private:
+  boost::asio::io_context m_io;
+  //
   tcp::socket socket_;
   std::string message="WERT";
   boost::asio::streambuf reply_;
@@ -58,19 +63,15 @@ private:
 int main() {
     using namespace std;
     try {
-      boost::asio::io_context io_context;
-      TCPClient client(io_context, "localhost");
       std::string msg="";
-      //while(true)
+      while(true)
       {
+        TCPClient client("localhost");
         std::promise<bool> promise;
         std::cin>>msg;
         cout<<"msg="<<msg<<endl;
-        client.run(msg, std::move(promise));
-        auto fut=promise.get_future();
-        fut.get();
+        client.run(msg);
       }
-      io_context.run();
     } catch (std::exception& e) {
       std::cerr << e.what() << std::endl;
     }

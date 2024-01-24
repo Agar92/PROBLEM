@@ -14,33 +14,33 @@ struct Session : std::enable_shared_from_this<Session> {
     async_read_until(socket, dynamic_buffer(message), "\n",
             [self=shared_from_this()] (boost::system::error_code ec,
                                        std::size_t length) {
-              std::cout<<"#1#:   "<<self->message<<std::endl;
+              //std::cout<<"#1#:   "<<self->message<<std::endl;
               if (ec || self->message == "\n") return;
               if(!ec) std::cout<<"!ec"<<std::endl;
-              std::cout<<"#2#:   "<<self->message<<std::endl;
+              //std::cout<<"#2#:   "<<self->message<<std::endl;
               boost::algorithm::to_upper(self->message);
-              std::cout<<"#3#:   "<<self->message<<std::endl;
+              //std::cout<<"#3#:   "<<self->message<<std::endl;
               self->write();
-              std::cout<<"#4#:   "<<self->message<<std::endl;
+              //std::cout<<"#4#:   "<<self->message<<std::endl;
             });
   }
   void write() {
-    std::cout<<"@1@:   "<<message<<std::endl;
+    //std::cout<<"@1@:   "<<message<<std::endl;
     message+="\n";
     async_write(socket, buffer(message),
                          [self=shared_from_this()] (boost::system::error_code ec,
                                            std::size_t length) {
-                  std::cout<<"***A***:   "<<self->message
-                           <<" length="<<length
-                           <<std::endl;
+                  //std::cout<<"***A***:   "<<self->message
+                  //         <<" length="<<length
+                  //         <<std::endl;
                   if (ec) return;
                   self->message.clear();
-                  std::cout<<"***B***:   "<<self->message
-                           <<" length="<<length
-                           <<std::endl;
+                  //std::cout<<"***B***:   "<<self->message
+                  //         <<" length="<<length
+                  //         <<std::endl;
                   self->read();
                 });
-    std::cout<<"@2@:   "<<message<<std::endl;
+    //std::cout<<"@2@:   "<<message<<std::endl;
   }
 private:
   ip::tcp::socket socket;
