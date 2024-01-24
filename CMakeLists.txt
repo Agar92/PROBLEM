@@ -11,7 +11,7 @@ target_link_libraries(server PRIVATE ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT
 
 set_target_properties(server PROPERTIES
                       CXX_STANDARD 17
-			    CXX_STANDARD_REQUIRED ON
+		      CXX_STANDARD_REQUIRED ON
 )
 
 add_executable(client client.cpp)
@@ -20,5 +20,5 @@ target_link_libraries(client PRIVATE ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT
 
 set_target_properties(client PROPERTIES
                       CXX_STANDARD 17
-			    CXX_STANDARD_REQUIRED ON
+		      CXX_STANDARD_REQUIRED ON
 )
