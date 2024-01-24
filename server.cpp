@@ -16,6 +16,7 @@ struct Session : std::enable_shared_from_this<Session> {
                                        std::size_t length) {
               std::cout<<"#1#:   "<<self->message<<std::endl;
               if (ec || self->message == "\n") return;
+              if(!ec) std::cout<<"!ec"<<std::endl;
               std::cout<<"#2#:   "<<self->message<<std::endl;
               boost::algorithm::to_upper(self->message);
               std::cout<<"#3#:   "<<self->message<<std::endl;
@@ -53,6 +54,7 @@ void serve(ip::tcp::acceptor& acceptor) {
     std::cout<<"socket.remote_endpoint():   "<<socket.remote_endpoint()<<std::endl;
     serve(acceptor);
     if (ec) return;
+    else std::cout<<"GOOD!"<<std::endl;
     auto session = std::make_shared<Session>(std::move(socket));
     session->read();
   });

@@ -14,20 +14,20 @@ set_target_properties(server PROPERTIES
 			    CXX_STANDARD_REQUIRED ON
 )
 
-add_executable(client client.cpp)
-target_include_directories(client PRIVATE ${Boost_INCLUDE_DIRS})
-target_link_libraries(client PRIVATE ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+add_executable(sync_tcp_client sync_tcp_client.cpp)
+target_include_directories(sync_tcp_client PRIVATE ${Boost_INCLUDE_DIRS})
+target_link_libraries(sync_tcp_client PRIVATE ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
-set_target_properties(client PROPERTIES
+set_target_properties(sync_tcp_client PROPERTIES
                       CXX_STANDARD 17
 			    CXX_STANDARD_REQUIRED ON
 )
 
-add_executable(async_client async_tcp_client.cpp)
-target_include_directories(async_client PRIVATE ${Boost_INCLUDE_DIRS})
-target_link_libraries(async_client PRIVATE ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+add_executable(async_tcp_client async_tcp_client.cpp)
+target_include_directories(async_tcp_client PRIVATE ${Boost_INCLUDE_DIRS})
+target_link_libraries(async_tcp_client PRIVATE ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
-set_target_properties(async_client PROPERTIES
+set_target_properties(async_tcp_client PROPERTIES
                       CXX_STANDARD 17
 			    CXX_STANDARD_REQUIRED ON
 )
