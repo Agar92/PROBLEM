@@ -1,7 +1,6 @@
 #include <boost/asio.hpp>
 #include <iostream>
 #include <string>
-#include "unistd.h"
 
 using boost::asio::ip::tcp;
 
@@ -67,7 +66,6 @@ int main() {
       while(true)
       {
         TCPClient client("localhost");
-        std::promise<bool> promise;
         std::cin>>msg;
         cout<<"msg="<<msg<<endl;
         client.run(msg);
