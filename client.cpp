@@ -12,7 +12,7 @@ int main()  {
     io_context io_context;
     boost::asio::ip::tcp::socket socket{io_context};
     socket.connect(ip::tcp::endpoint(ip::tcp::v4(),1895));
-    //while(true)
+    while(true)
     {
       std::string input;
       std::cin>>input;
@@ -57,6 +57,7 @@ int main()  {
         response.clear();
       }
     }
+    io_context.run();
   }
   catch (std::exception& e)
   {
